@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ltp.gradesubmission.entity.Student;
+import com.ltp.gradesubmission.service.StudentService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -22,11 +24,11 @@ public class StudentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
-    // private StudentService studentService;
+    private StudentService studentService;
 
-    // public StudentController(StudentService studentService) {
-    // this.studentService = studentService;
-    // }
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
@@ -38,7 +40,8 @@ public class StudentController {
     @PostMapping("/")
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
         LOGGER.info("[IN]StudentController - saveStudent - student: {}", student);
-
+        student = studentService.saveStudent(student);
+        LOGGER.info("[OUT]StudentController - saveStudent - student: {}", student);
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
