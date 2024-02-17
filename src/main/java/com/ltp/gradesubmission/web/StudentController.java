@@ -16,9 +16,6 @@ import com.ltp.gradesubmission.entity.Student;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -28,10 +25,9 @@ public class StudentController {
     // private StudentService studentService;
 
     // public StudentController(StudentService studentService) {
-    //     this.studentService = studentService;
+    // this.studentService = studentService;
     // }
 
-    
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         LOGGER.info("[IN]StudentController - getStudent - id: {}", id);
@@ -42,14 +38,14 @@ public class StudentController {
     @PostMapping("/")
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
         LOGGER.info("[IN]StudentController - saveStudent - student: {}", student);
-        
+
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
         LOGGER.info("[IN]StudentController - deleteStudent - id: {}", id);
-        
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -59,6 +55,5 @@ public class StudentController {
         // Student student = studentService.getStudent(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
 
 }
