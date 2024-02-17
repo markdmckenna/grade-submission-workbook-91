@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,10 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ltp.gradesubmission.entity.Grade;
+import com.ltp.gradesubmission.service.GradeService;
 
 @RestController
 @RequestMapping("/grade")
 public class GradeController {
+
+    private GradeService gradeService;
+
+    public GradeController(GradeService gradeService) {
+        this.gradeService = gradeService;
+    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GradeController.class);
 
@@ -34,6 +42,8 @@ public class GradeController {
             @PathVariable Long courseId) {
         Object[] logArgs = { grade, studentId, courseId };
         LOGGER.info("[IN]GradeController - saveGrade - grade: {} - studentId: {} - courseId: {}", logArgs);
+        grade = gradeService.saveGrade(grade, studentId, courseId);
+        LOGGER.info("[OUT]GradeController - saveGrade - grade: {}", grade);
         return new ResponseEntity<>(grade, HttpStatus.CREATED);
     }
 
