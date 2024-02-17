@@ -33,8 +33,9 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         LOGGER.info("[IN]StudentController - getStudent - id: {}", id);
-        // Student student = studentService.getStudent(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Student student = studentService.getStudent(id);
+        LOGGER.info("[OUT]StudentController - getStudent - student: {}", student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @PostMapping("/")
@@ -48,15 +49,16 @@ public class StudentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
         LOGGER.info("[IN]StudentController - deleteStudent - id: {}", id);
-
+        studentService.deleteStudent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getStudents() {
         LOGGER.info("[IN]StudentController - getStudents");
-        // Student student = studentService.getStudent(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Student> students = studentService.getStudents();
+        LOGGER.info("[OUT]StudentController - getStudents - students: {}", students);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
 }
