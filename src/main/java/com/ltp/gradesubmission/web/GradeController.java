@@ -34,7 +34,9 @@ public class GradeController {
     @GetMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> getGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
         LOGGER.info("[IN]GradeController - getGrade - studentId: {} - courseId: {}", studentId, courseId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Grade grade = gradeService.getGrade(studentId, courseId);
+        LOGGER.info("[OUT]GradeController - getGrade - grade: {}", grade);
+        return new ResponseEntity<>(grade, HttpStatus.OK);
     }
 
     @PostMapping("/student/{studentId}/course/{courseId}")
