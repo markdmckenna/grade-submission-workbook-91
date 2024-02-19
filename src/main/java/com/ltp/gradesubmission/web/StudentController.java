@@ -2,6 +2,8 @@ package com.ltp.gradesubmission.web;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class StudentController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student) {
         LOGGER.info("[IN]StudentController - saveStudent - student: {}", student);
         student = studentService.saveStudent(student);
         LOGGER.info("[OUT]StudentController - saveStudent - student: {}", student);

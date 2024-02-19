@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,14 +34,17 @@ public class Course {
 
     @NonNull
     @Column(nullable = false)
+    @NotBlank(message = "Subject cannot be blank")
     private String subject;
 
     @NonNull
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Course code cannot be blank")
     private String code;
 
     @NonNull
     @Column(nullable = false)
+    @NotBlank(message = "Description cannot be blank")
     private String description;
 
     @JsonIgnore

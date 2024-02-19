@@ -2,6 +2,8 @@ package com.ltp.gradesubmission.web;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class CourseController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Course> saveCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> saveCourse(@Valid @RequestBody Course course) {
         LOGGER.info("[IN]CourseController - saveCourse - course: {}", course);
         course = courseService.saveCourse(course);
         LOGGER.info("[OUT]CourseController - saveCourse - course: {}", course);
