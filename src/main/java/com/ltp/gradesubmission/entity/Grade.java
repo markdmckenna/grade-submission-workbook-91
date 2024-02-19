@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "grade")
+@Table(name = "grade", uniqueConstraints = { @UniqueConstraint(columnNames = { "student_id", "course_id" }) })
 public class Grade {
 
     @Id
@@ -29,5 +30,10 @@ public class Grade {
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private Course course;
+
 
 }

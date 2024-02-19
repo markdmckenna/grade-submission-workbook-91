@@ -52,6 +52,7 @@ public class GradeController {
             @PathVariable Long courseId) {
         Object[] logArgs = { grade, studentId, courseId };
         LOGGER.info("[IN]GradeController - updateGrade - grade: {} - studentId: {} - courseId: {}", logArgs);
+        grade = gradeService.updateGrade(grade.getScore(), studentId, courseId);
         return new ResponseEntity<>(grade, HttpStatus.OK);
     }
 
@@ -60,25 +61,32 @@ public class GradeController {
             @PathVariable Long courseId) {
         Object[] logArgs = { studentId, courseId };
         LOGGER.info("[IN]GradeController - deleteGrade - studentId: {} - courseId: {}", logArgs);
+        this.gradeService.deleteGrade(studentId, courseId);
+        LOGGER.info("[OUT]GradeController - deleteGrade");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/student/{studentId}")
     public ResponseEntity<List<Grade>> getStudentGrades(@PathVariable Long studentId) {
         LOGGER.info("[IN]GradeController - getStudentGrades - studentId: {}", studentId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Grade> grades = this.gradeService.getStudentGrades(studentId);
+        LOGGER.info("[OUT]GradeController - getStudentGrades - grades: {}", grades);
+        return new ResponseEntity<>(grades, HttpStatus.OK);
     }
 
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Grade>> getCourseGrades(@PathVariable Long courseId) {
         LOGGER.info("[IN]GradeController - getCourseGrades - courseId: {}", courseId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Grade> grades = this.gradeService.getCourseGrades(courseId);
+        LOGGER.info("[OUT]GradeController - getCourseGrades - grades: {}", grades);
+        return new ResponseEntity<>(grades, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Grade>> getGrades() {
         LOGGER.info("[IN]GradeController - getGrades");
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Grade> grades = this.gradeService.getAllGrades();
+        return new ResponseEntity<>(grades, HttpStatus.OK);
     }
 
 }

@@ -1,14 +1,15 @@
 package com.ltp.gradesubmission.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ltp.gradesubmission.entity.Student;
+import com.ltp.gradesubmission.exception.StudentNotFoundException;
 import com.ltp.gradesubmission.repository.StudentRepository;
-import com.ltp.gradesubmission.web.GradeController;
 
 import lombok.AllArgsConstructor;
 
@@ -16,13 +17,14 @@ import lombok.AllArgsConstructor;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GradeController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private StudentRepository studentRepository;
 
     @Override
     public Student getStudent(Long id) {
-        return studentRepository.findById(id).get();
+        Optional<Student> student = studentRepository.findById(id);
+        return unwrapStudent(student, id);
     }
 
     @Override
@@ -38,6 +40,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getStudents() {
         return (List<Student>) studentRepository.findAll();
+    }
+
+    static Student unwrapStudent(Optional<Student> entity, Long id) {
+        if (entity.isPresent()) return entity.get();
+        else throw new StudentNotFoundException(id);
     }
 
 
