@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,15 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.service.GradeService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/grade")
 public class GradeController {
 
     private GradeService gradeService;
-
-    public GradeController(GradeService gradeService) {
-        this.gradeService = gradeService;
-    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GradeController.class);
 

@@ -15,35 +15,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ltp.gradesubmission.entity.Course;
+import com.ltp.gradesubmission.service.CourseService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/course")
 public class CourseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseController.class);
 
+    private CourseService courseService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Course> getCourse(@PathVariable Long id) {
         LOGGER.info("[IN]CourseController - getCourse - id: {}", id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Course course = this.courseService.getCourse(id);
+        LOGGER.info("[OUT]CourseController - getCourse - course: {}", course);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @PostMapping("/")
     public ResponseEntity<Course> saveCourse(@RequestBody Course course) {
         LOGGER.info("[IN]CourseController - saveCourse - course: {}", course);
+        course = courseService.saveCourse(course);
+        LOGGER.info("[OUT]CourseController - saveCourse - course: {}", course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCourse(@PathVariable Long id) {
         LOGGER.info("[IN]CourseController - deleteCourse - id: {}", id);
+        this.courseService.deleteCourse(id);
+        LOGGER.info("[OUT]CourseController - deleteCourse");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Course>> getCourses() {
         LOGGER.info("[IN]CourseController - getCourses");
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Course> courses = this.courseService.getCourses();
+        LOGGER.info("[OUT]CourseController - getCourses - courses: {}", courses);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
 }

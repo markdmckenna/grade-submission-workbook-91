@@ -9,18 +9,15 @@ import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.repository.GradeRepository;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 public class GradeServiceImpl implements GradeService {
 
     private GradeRepository gradeRepository;
 
-    private StudentRepository studentRepository;
-
-
-    public GradeServiceImpl(GradeRepository gradeRepository, StudentRepository studentRepository) {
-        this.gradeRepository = gradeRepository;
-        this.studentRepository = studentRepository;
-    }    
+    private StudentRepository studentRepository;  
     
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
