@@ -53,7 +53,7 @@ public class GradeSubmissionApplication implements CommandLineRunner {
 						"In this class, you will learn the art of changing the form or appearance of an object.")
 		};
 
-		for (int i = 0; i < students.length; i++) {
+		for (int i = 0; i < courses.length; i++) {
 			courseRepository.save(courses[i]);
 		}
 
